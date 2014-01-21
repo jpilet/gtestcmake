@@ -13,12 +13,14 @@ ExternalProject_Add(gtest_ext
         )
 
 enable_testing()
-include_directories("${CMAKE_BINARY_DIR}/third-party/gtest-src/include")
 link_directories("${CMAKE_BINARY_DIR}/third-party/gtest-build")
+
+find_package(Threads)
 
 function(cxx_test name sources)
     add_executable(${name} ${sources})
-    target_link_libraries(${name} ${ARGN} gtest)
+    target_link_libraries(${name} ${ARGN} gtest ${CMAKE_THREAD_LIBS_INIT})
+    set_property(TARGET ${name} PROPERTY INCLUDE_DIRECTORIES "${CMAKE_BINARY_DIR}/third-party/gtest-src/include")
     add_dependencies(${name} gtest_ext)
     # Working directory: where the dlls are installed.
     add_test(NAME ${name} 
