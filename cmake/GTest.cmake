@@ -20,7 +20,7 @@ find_package(Threads)
 function(cxx_test name sources)
     add_executable(${name} ${sources})
     target_link_libraries(${name} ${ARGN} gtest ${CMAKE_THREAD_LIBS_INIT})
-    set_property(TARGET ${name} PROPERTY INCLUDE_DIRECTORIES "${CMAKE_BINARY_DIR}/third-party/gtest-src/include")
+    set_property(TARGET ${name} APPEND PROPERTY INCLUDE_DIRECTORIES "${CMAKE_BINARY_DIR}/third-party/gtest-src/include")
     add_dependencies(${name} gtest_ext)
     # Working directory: where the dlls are installed.
     add_test(NAME ${name} 
